@@ -6,7 +6,7 @@ class Network(object):
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(x, y) for x, y in zip(sizes[:-1], sizes[1:])]
+        self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 
     def update_mini_batch(self, mini_batch, eta):
         nabla_b = [np.zeros(b.shape) for b in self.biases]
@@ -27,7 +27,8 @@ class Network(object):
         for j in range(epochs):
             np.random.shuffle(training_data)
             mini_batches = [
-                test_data[k : k + mini_batch_size] for k in range(0, n, mini_batch_size)
+                training_data[k : k + mini_batch_size]
+                for k in range(0, n, mini_batch_size)
             ]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
@@ -56,7 +57,7 @@ class Network(object):
             activation = sigmoid(z)
             activations.append(activation)
 
-        delta = cost_derivative(activations[-1], y) / sigmoid_derivative(z_vector[-1])
+        delta = cost_derivative(activations[-1], y) * sigmoid_derivative(z_vector[-1])
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
 
