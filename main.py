@@ -68,6 +68,10 @@ class Network(object):
             nabla_w[-i] = np.dot(delta, activations[-i - 1].transpose())
         return (nabla_b, nabla_w)
 
+    def evaluate(self, test_data):
+        test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
+        return sum(int(x == y) for (x, y) in test_results)
+
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
