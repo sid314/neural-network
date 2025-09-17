@@ -16,7 +16,7 @@ def sigmoid(z):
 def feedforward(self, a):
     for b, w in zip(self.biases, self.weights):
         a = sigmoid(np.dot(w, a) + b)
-        return a
+    return a
 
 
 def stochastic_gradient_descent(
@@ -84,4 +84,4 @@ def cost_derivative(output_activations, y):
 
 
 def sigmoid_derivative(z):
-    return sigmoid(z) * (sigmoid(z))
+    return sigmoid(z) * (1 - sigmoid(z))
