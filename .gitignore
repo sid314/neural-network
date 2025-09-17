@@ -8,3 +8,5 @@ wheels/
 
 # Virtual environments
 .venv
+mnist_loader.py
+mnist.pkl.gz
